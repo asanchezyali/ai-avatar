@@ -1,12 +1,14 @@
 import React from "react";
-import ZippyAvatar from "@/components/Zippy/ZippyAvatar";
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
+import ZippyAvatar from "@/components/Zippy/ZippyAvatar";
+import sendMessage from "@/api/LLM";
 
-export default function Home() {
+export default function AvatarApp() {
   const [visemeID, setVisemeID] = React.useState(0);
   const [isDisabled, setIsDisabled] = React.useState(false);
 
   const [text, setText] = React.useState("");
+  const [avatarResponse, setAvatarResponse] = React.useState("");
   const synthesizer = React.useRef<SpeechSDK.SpeechSynthesizer | null>(null);
 
   if (!process.env.NEXT_PUBLIC_SPEECH_KEY || !process.env.NEXT_PUBLIC_SPEECH_REGION) {
@@ -56,16 +58,22 @@ export default function Home() {
   };
 
   const handleSynthesis = () => {
+    sendMessage(text).then((response) => {
+      setAvatarResponse(response);
+      console.log(response);
+    });
+
     if (!synthesizer.current) {
       return;
     }
 
+    console.log(avatarResponse);
     const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US">
     <voice name="en-US-JennyNeural">
         <mstts:viseme type="redlips_front"/>
         <mstts:express-as style="excited">
             <prosody rate="-8%" pitch="23%">
-                ${text}
+                ${avatarResponse}
             </prosody>
         </mstts:express-as>
     </voice>
