@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "microsoft-cognitiveservices-speech-sdk": "^1.33.1",
+    "microsoft-cognitiveservices-speech-sdk": "^1.34.0",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18"
