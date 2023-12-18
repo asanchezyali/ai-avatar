@@ -7,8 +7,6 @@ function PaperAirplane() {
       fill="none"
       stroke="currentColor"
       strokeWidth="1.5"
-      className="w-6 h-6"
-      viewBox="0 0 24 24"
     >
       <path
         strokeLinecap="round"
