@@ -1,7 +1,7 @@
 import personalityConfig from "@/context/personality";
 
-export const LLM_BASE_URL = "https://generativelanguage.googleapis.com";
-const LLM_URL = `${LLM_BASE_URL}/v1beta1/models/chat-bison-001:generateMessage?key=${process.env.NEXT_PUBLIC_LLM_API_KEY}`;
+export const BASE_URL = "https://generativelanguage.googleapis.com";
+const PALM_URL = `${BASE_URL}/v1beta1/models/chat-bison-001:generateMessage?key=${process.env.NEXT_PUBLIC_LLM_API_KEY}`;
 
 export interface MessageProps {
   author: string;
@@ -33,7 +33,7 @@ const sendPrompt = async (prompt: PromptProps, temperature: number): Promise<Sen
     candidate_count: 1,
   };
 
-  const response = await fetch(LLM_URL, {
+  const response = await fetch(PALM_URL, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -72,7 +72,6 @@ const sendMessageToPALM = async (message: string): Promise<string> => {
   if (response.candidates && response.candidates.length > 0) {
     result = response.candidates[0].content;
   } else {
-    // Handle the case where response.candidates is undefined or an empty array
     result = "Sorry, I don't understand.";
   }
 

@@ -53,6 +53,13 @@ export default function AvatarApp() {
   );
 
   React.useEffect(() => {
+    setTimeout(() => {
+      playAudio(setVisemeID, "outputaudio.wav", "viseme.json");
+    }, 1000);
+  }
+  , []);
+
+  React.useEffect(() => {
     speechConfig.speechSynthesisVoiceName = "en-US-JennyNeural";
 
     let synthesisStartTime = 0;
