@@ -4,6 +4,38 @@ import ZippyAvatar from "@/components/Zippy/ZippyAvatar";
 import sendMessageToPALM from "@/api/PALM";
 import PaperAirplane from "@/icons/paper-airplane";
 
+interface VisemeFrame {
+  offset: number;
+  visemeId: number;
+}
+
+let TRANSATION_DELAY = 0;
+let ttsAudio: HTMLAudioElement;
+
+async function playAudio(setVisemeID: (id: number) => void, audioUrl: string, visemesUrl: string) {
+  if (ttsAudio) {
+    ttsAudio.pause();
+  }
+  ttsAudio = new Audio(audioUrl);
+  const response = await fetch(new Request(visemesUrl), {
+    method: "GET",
+    mode: "no-cors",
+  });
+
+  const visemes = await response.json();
+
+  ttsAudio.ontimeupdate = () => {
+    const currentViseme = visemes.find((frame: VisemeFrame) => {
+      return frame.offset - TRANSATION_DELAY <= ttsAudio.currentTime * 1000;
+    });
+    if (!currentViseme) {
+      return;
+    }
+    setVisemeID(currentViseme.id ?? 0);
+  };
+  ttsAudio.play();
+}
+
 export default function AvatarApp() {
   const [visemeID, setVisemeID] = React.useState(0);
   const [isDisabled, setIsDisabled] = React.useState(false);
@@ -59,6 +91,7 @@ export default function AvatarApp() {
   };
 
   const handleSynthesis = () => {
+    setZippySay("Please wait...");
     setText("");
     sendMessageToPALM(text).then((response) => {
       setZippySay(response);
@@ -72,6 +105,7 @@ export default function AvatarApp() {
                     ${response}
                 </prosody>
             </mstts:express-as>
+            <mstts:viseme type="sil"/>
             <mstts:viseme type="sil"/>
         </voice>
       </speak>`;
@@ -90,9 +124,11 @@ export default function AvatarApp() {
     <div className="w-screen h-screen items-center justify-center flex flex-col mx-auto">
       <div className="flux justify-center items-center w-[500px] relative">
         <ZippyAvatar visemeID={visemeID} />
-        {zippySay ? <div className="absolute top-[-50px] left-[300px] w-[400px] bg-white p-2 rounded-lg shadow-lg text-xs">
-          {zippySay} 
-        </div> : null}
+        {zippySay ? (
+          <div className="absolute top-[-50px] left-[400px] w-[400px] bg-white p-2 rounded-lg shadow-lg text-xs">
+            {zippySay}
+          </div>
+        ) : null}
       </div>
       <div className="h-10 relative my-4">
         <input
