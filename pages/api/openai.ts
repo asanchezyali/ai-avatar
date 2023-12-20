@@ -19,7 +19,8 @@ const prompt = PromptTemplate.fromTemplate(
   Your response must be based on your personality. You have this backstory: "${personalityConfig.backStory}". 
   Your knowledge base is: "${personalityConfig.knowledgeBase}". The response should be one single sentence only. 
   Please answer within 100 characters the following message: {message}. 
-  The response must be based on the personality, backstory, and knowledge base that you have. The answer must be concise and short and must be one single sentence only in the following format: {message}.`
+  The response must be based on the personality, backstory, and knowledge base that you have. 
+  The answer must be concise and short and must be one single sentence only without quotes or any other symbols.`
 );
 
 const sendMessageToOpenAI = async (message: string): Promise<string> => {
