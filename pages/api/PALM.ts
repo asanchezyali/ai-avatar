@@ -1,7 +1,7 @@
 import personalityConfig from "@/context/personality";
 
 export const BASE_URL = "https://generativelanguage.googleapis.com";
-const PALM_URL = `${BASE_URL}/v1beta1/models/chat-bison-001:generateMessage?key=${process.env.NEXT_PUBLIC_LLM_API_KEY}`;
+const PALM_URL = `${BASE_URL}/v1beta1/models/chat-bison-001:generateMessage?key=${process.env.NEXT_PUBLIC_PALM_API_KEY}`;
 
 export interface MessageProps {
   author: string;
@@ -59,8 +59,6 @@ const sendMessageToPALM = async (message: string): Promise<string> => {
   };
 
   const response = await sendPrompt(prompt, 0.25);
-  console.log("Prompt: ", prompt);
-  console.log(response);
 
   if (response.candidates && response.candidates.length > 0) {
     messages = response.messages.concat(response.candidates[0]);

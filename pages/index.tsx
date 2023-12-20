@@ -1,7 +1,6 @@
 import React from "react";
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 import ZippyAvatar from "@/components/Zippy/ZippyAvatar";
-import sendMessageToPALM from "@/api/PALM";
 import PaperAirplane from "@/icons/paper-airplane";
 
 interface VisemeFrame {
@@ -53,13 +52,6 @@ export default function AvatarApp() {
   );
 
   React.useEffect(() => {
-    setTimeout(() => {
-      playAudio(setVisemeID, "outputaudio.wav", "viseme.json");
-    }, 1000);
-  }
-  , []);
-
-  React.useEffect(() => {
     speechConfig.speechSynthesisVoiceName = "en-US-JennyNeural";
 
     let synthesisStartTime = 0;
@@ -81,7 +73,6 @@ export default function AvatarApp() {
     };
 
     synthesizer.current.visemeReceived = (s, e) => {
-      console.log(synthesisStartTime, e.audioOffset);
       const visemeTime = synthesisStartTime + e.audioOffset / 10000;
       const delay = visemeTime - Date.now();
       setTimeout(
@@ -97,19 +88,35 @@ export default function AvatarApp() {
     setText(event.target.value);
   };
 
-  const handleSynthesis = () => {
+  const handleSynthesis = async () => {
     setZippySay("Please wait...");
     setText("");
-    sendMessageToPALM(text).then((response) => {
-      setZippySay(response);
 
-      const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US">
+    const response = await fetch("/api/openai", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: text }),
+    });
+
+    if (!response.ok) {
+      console.error("Error sending message to OpenAI");
+      return;
+    }
+
+    const data = await response.json();
+    const messageFromOpenAI = data.response;
+
+    setZippySay(messageFromOpenAI);
+
+    const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US">
         <voice name="en-US-JennyNeural">
             <mstts:viseme type="redlips_front"/>
             <break time="500ms"/>
             <mstts:express-as style="excited">
                 <prosody rate="-8%" pitch="23%">
-                    ${response}
+                    ${messageFromOpenAI}
                 </prosody>
             </mstts:express-as>
             <mstts:viseme type="sil"/>
@@ -117,13 +124,12 @@ export default function AvatarApp() {
         </voice>
       </speak>`;
 
-      if (!synthesizer.current) {
-        return;
-      }
+    if (!synthesizer.current) {
+      return;
+    }
 
-      synthesizer.current.speakSsmlAsync(ssml, (error) => {
-        console.log(error);
-      });
+    synthesizer.current.speakSsmlAsync(ssml, (error) => {
+      console.log(error);
     });
   };
 
@@ -144,6 +150,7 @@ export default function AvatarApp() {
           onChange={handleTextChange}
           className="border-2 border-gray-300 bg-gray-100 h-10 w-[600px] pl-5 pr-[120px] rounded-lg text-sm focus:outline-none mb-2"
           placeholder="Write something..."
+          maxLength={100}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
               handleSynthesis();
