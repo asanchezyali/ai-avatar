@@ -107,10 +107,14 @@ export default function AvatarApp() {
 
     const data = await response.json();
     const messageFromOpenAI = data.response;
+    console.log(messageFromOpenAI);
 
     setZippySay(messageFromOpenAI);
 
-    const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US">
+    const ssml = `<speak version="1.0"
+        xmlns="http://www.w3.org/2001/10/synthesis"
+        xmlns:mstts="https://www.w3.org/2001/mstts"
+        xml:lang="en-US">
         <voice name="en-US-JennyNeural">
             <mstts:viseme type="redlips_front"/>
             <break time="500ms"/>
@@ -148,7 +152,7 @@ export default function AvatarApp() {
           type="text"
           value={text}
           onChange={handleTextChange}
-          className="border-2 border-gray-300 bg-gray-100 h-10 w-[600px] pl-5 pr-[120px] rounded-lg text-sm focus:outline-none mb-2"
+          className="border-2 border-gray-300 bg-gray-100 h-10 w-[600px] pl-5 pr-[120px] rounded-lg text-sm mb-2"
           placeholder="Write something..."
           maxLength={100}
           onKeyDown={(event) => {
@@ -158,7 +162,7 @@ export default function AvatarApp() {
           }}
         />
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-r-lg absolute bottom-0 right-0 w-[50px] h-10"
+          className="bg-blue-500 text-white font-bold py-2 px-3 rounded-r-lg absolute bottom-0 right-0 w-[50px] h-10"
           onClick={() => handleSynthesis()}
           disabled={isDisabled}
         >
