@@ -79,7 +79,7 @@ export default function AvatarApp() {
         () => {
           setVisemeID(e.visemeId);
         },
-        delay > 0 ? delay : 0
+        delay > 0 ? delay + 500 : 0
       );
     };
   }, [speechConfig]);

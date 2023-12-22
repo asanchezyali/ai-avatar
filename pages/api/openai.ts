@@ -1,50 +1,79 @@
-import { OpenAI } from "langchain/llms/openai";
-import { GooglePaLM } from "langchain/llms/googlepalm";
-import { PromptTemplate } from "langchain/prompts";
-import { NextApiRequest, NextApiResponse } from 'next';
+import { compile } from "html-to-text";
+import { RecursiveUrlLoader } from "langchain/document_loaders/web/recursive_url";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { ChatOpenAI } from "langchain/chat_models/openai";
+import { ChatPromptTemplate } from "langchain/prompts";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { HNSWLib } from "langchain/vectorstores/hnswlib";
+import { NextApiRequest, NextApiResponse } from "next";
+import { BaseOutputParser } from "langchain/schema/output_parser";
 import personalityConfig from "@/context/personality";
+import { RunnableLambda, RunnableMap, RunnablePassthrough } from "langchain/runnables";
 
-const openAI = new OpenAI({
+const url = "https://monadical.com/";
+
+const compiledConvert = compile({ wordwrap: 130 });
+
+const loader = new RecursiveUrlLoader(url, {
+  extractor: compiledConvert,
+  maxDepth: 2,
+});
+
+const docs = await loader.load();
+
+const splitter = new RecursiveCharacterTextSplitter({
+  chunkSize: 1000,
+  chunkOverlap: 20,
+});
+
+const splittedDocs = await splitter.splitDocuments(docs);
+
+class OpenAIOutputParser extends BaseOutputParser<string> {
+  async parse(text: string): Promise<string> {
+    return text.replace(/"/g, "");
+  }
+}
+
+const embeddings = new OpenAIEmbeddings({ openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY });
+
+const vectorStore = await HNSWLib.fromDocuments(splittedDocs, embeddings);
+
+const model = new ChatOpenAI({
   openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   temperature: 0.2,
 });
 
-const PaLM = new GooglePaLM({
-  apiKey: process.env.NEXT_PUBLIC_PALM_API_KEY,
-  temperature: 0.5,
+const retriever = vectorStore.asRetriever(1);
+
+const template = `Act as ${personalityConfig.personality}; respond to {context} with ${personalityConfig.backStory}. 
+  ${personalityConfig.knowledgeBase}" in mind. Keep it concise, within 100 characters.`;
+
+const prompt = ChatPromptTemplate.fromMessages([
+  ["ai", template],
+  ["human", "{question}"],
+]);
+
+const outputParser = new OpenAIOutputParser();
+
+const setupAndRetrieval = RunnableMap.from({
+  context: new RunnableLambda({
+    func: (input: string) => retriever.invoke(input).then((response) => response[0].pageContent),
+  }).withConfig({ runName: "contextRetriever" }),
+  question: new RunnablePassthrough(),
 });
 
-const prompt = PromptTemplate.fromTemplate(
-  `Your task is to acting as a character that has this personality: "${personalityConfig.personality}". 
-  Your response must be based on your personality. You have this backstory: "${personalityConfig.backStory}". 
-  Your knowledge base is: "${personalityConfig.knowledgeBase}". The response should be one single sentence only. 
-  Please answer within 100 characters the following message: {message}. 
-  The response must be based on the personality, backstory, and knowledge base that you have. 
-  The answer must be concise and short and must be one single sentence only without quotes or any other symbols.`
-);
-
-const sendMessageToOpenAI = async (message: string): Promise<string> => {
-  const promptWithMessage = await prompt.format({ message });
-  const response = await openAI.predict(promptWithMessage);
-  return response;
-};
-
-const sendMessageToPALM = async (message: string): Promise<string> => {
-  const promptWithMessage = await prompt.format({ message });
-  const response = await PaLM.predict(promptWithMessage);
-  return response;
-};
+const chain = setupAndRetrieval.pipe(prompt).pipe(model).pipe(outputParser);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     const message = req.body.message;
     try {
-      const response = await sendMessageToOpenAI(message);
+      const response = await chain.invoke(message);
       res.status(200).json({ response });
     } catch (error) {
-      res.status(500).json({ error: 'Error processing request' });
+      res.status(500).json({ error: "Error processing request" });
     }
   } else {
-    res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: "Method not allowed" });
   }
 }

@@ -12,6 +12,8 @@
     "@google-ai/generativelanguage": "^0.2.1",
     "google-auth-library": "^8.9.0",
     "hnswlib-node": "^2.1.0",
+    "html-to-text": "^9.0.5",
+    "jsdom": "^23.0.1",
     "langchain": "^0.0.209",
     "microsoft-cognitiveservices-speech-sdk": "^1.34.0",
     "next": "14.0.3",
