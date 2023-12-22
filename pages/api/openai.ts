@@ -7,7 +7,7 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { HNSWLib } from "langchain/vectorstores/hnswlib";
 import { NextApiRequest, NextApiResponse } from "next";
 import { BaseOutputParser } from "langchain/schema/output_parser";
-import personalityConfig from "@/context/personality";
+import personalityConfig from "@/constants/personality";
 import { RunnableLambda, RunnableMap, RunnablePassthrough } from "langchain/runnables";
 
 const url = "https://monadical.com/";
