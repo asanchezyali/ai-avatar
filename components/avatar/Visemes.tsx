@@ -7,7 +7,7 @@ interface VisemeMap {
 const Visemes: VisemeMap = {
   0: (
     <path
-      id="mouth"
+      id="ZippyMouth"
       fill="#fff"
       d="M 108.51 96.385
           c 4.16-.01 6.44-3.93 10.1-4.5 3.83-.58 5.86 2.02 8.62 2.73
@@ -25,7 +25,7 @@ const Visemes: VisemeMap = {
     />
   ),
   1: (
-    <g id="mouth" transform="translate(85.594 85.913)">
+    <g id="ZippyMouth" transform="translate(85.594 85.913)">
       <path
         id="path37"
         fill="none"
@@ -72,7 +72,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   2: (
-    <g id="mouth" transform="translate(86.42 89.831)">
+    <g id="ZippyMouth" transform="translate(86.42 89.831)">
       <g id="g38" fill="none" stroke="#f1f0f0" strokeWidth="2">
         <path
           id="path37"
@@ -130,7 +130,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   3: (
-    <g id="mouth" transform="translate(86.633 88.987)">
+    <g id="ZippyZippyMouth" transform="translate(86.633 88.987)">
       <path
         id="path37"
         fill="none"
@@ -160,7 +160,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   4: (
-    <g id="mouth" transform="translate(87.056 84.264)">
+    <g id="ZippyZippyMouth" transform="translate(87.056 84.264)">
       <g id="g38" fill="none" stroke="#f1f0f0" strokeWidth="2">
         <path
           id="path37"
@@ -213,7 +213,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   5: (
-    <g id="mouth" transform="translate(87.58 83.476)">
+    <g id="ZippyZippyMouth" transform="translate(87.58 83.476)">
       <path
         id="path37"
         fill="none"
@@ -248,7 +248,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   6: (
-    <g id="mouth" transform="translate(87.264 83.903)">
+    <g id="ZippyZippyMouth" transform="translate(87.264 83.903)">
       <path
         id="path37"
         fill="none"
@@ -282,7 +282,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   7: (
-    <g id="mouth" transform="translate(86.067 90.188)">
+    <g id="ZippyZippyMouth" transform="translate(86.067 90.188)">
       <path
         id="path37"
         fill="none"
@@ -314,7 +314,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   8: (
-    <g id="mouth" transform="translate(85.893 87.577)">
+    <g id="ZippyZippyMouth" transform="translate(85.893 87.577)">
       <path
         id="path37"
         fill="none"
@@ -344,7 +344,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   9: (
-    <g id="mouth" transform="translate(86.494 90.655)">
+    <g id="ZippyZippyMouth" transform="translate(86.494 90.655)">
       <path
         id="path37"
         fill="none"
@@ -374,7 +374,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   10: (
-    <g id="mouth" transform="translate(85.391 87.185)">
+    <g id="ZippyZippyMouth" transform="translate(85.391 87.185)">
       <path
         id="path37"
         fill="none"
@@ -408,7 +408,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   11: (
-    <g id="mouth" transform="translate(87.456 89.832)">
+    <g id="ZippyMouth" transform="translate(87.456 89.832)">
       <g id="g38" fill="none" stroke="#f1f0f0" strokeWidth="2">
         <path
           id="path37"
@@ -460,7 +460,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   12: (
-    <g id="mouth" transform="translate(86.5 84.336)">
+    <g id="ZippyMouth" transform="translate(86.5 84.336)">
       <g id="g38" fill="none" stroke="#f1f0f0" strokeWidth="2">
         <path
           id="path37"
@@ -518,7 +518,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   13: (
-    <g id="mouth" transform="translate(86.096 87.462)">
+    <g id="ZippyMouth" transform="translate(86.096 87.462)">
       <path
         id="path37"
         fill="none"
@@ -547,7 +547,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   14: (
-    <g id="mouth" transform="translate(87.29 85.49)">
+    <g id="ZippyMouth" transform="translate(87.29 85.49)">
       <path
         id="path37"
         fill="none"
@@ -583,7 +583,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   15: (
-    <g id="mouth" transform="translate(86.023 84.54)">
+    <g id="ZippyMouth" transform="translate(86.023 84.54)">
       <path
         id="path37"
         fill="none"
@@ -625,7 +625,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   16: (
-    <g id="mouth" transform="translate(86.039 85.176)">
+    <g id="ZippyMouth" transform="translate(86.039 85.176)">
       <path
         id="path37"
         fill="none"
@@ -654,7 +654,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   17: (
-    <g id="mouth" transform="translate(86.421 85.949)">
+    <g id="ZippyMouth" transform="translate(86.421 85.949)">
       <path
         id="path37"
         fill="none"
@@ -686,7 +686,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   18: (
-    <g id="mouth" transform="translate(87.296 83.182)">
+    <g id="ZippyMouth" transform="translate(87.296 83.182)">
       <path
         id="path1-4"
         fill="none"
@@ -736,7 +736,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   19: (
-    <g id="mouth" transform="translate(89.098 85.49)">
+    <g id="ZippyMouth" transform="translate(89.098 85.49)">
       <path
         id="path37"
         fill="none"
@@ -772,7 +772,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   20: (
-    <g id="mouth" transform="translate(88.545 87.816)">
+    <g id="ZippyMouth" transform="translate(88.545 87.816)">
       <g id="g38" fill="none" stroke="#f1f0f0" strokeWidth="2">
         <path
           id="path37"
@@ -810,7 +810,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   21: (
-    <g id="mouth" transform="translate(86.994 81.423)">
+    <g id="ZippyMouth" transform="translate(86.994 81.423)">
       <path
         id="path37"
         fill="none"
