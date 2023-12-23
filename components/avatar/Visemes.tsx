@@ -130,7 +130,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   3: (
-    <g id="ZippyZippyMouth" transform="translate(86.633 88.987)">
+    <g id="ZippyMouth" transform="translate(86.633 88.987)">
       <path
         id="path37"
         fill="none"
@@ -160,7 +160,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   4: (
-    <g id="ZippyZippyMouth" transform="translate(87.056 84.264)">
+    <g id="ZippyMouth" transform="translate(87.056 84.264)">
       <g id="g38" fill="none" stroke="#f1f0f0" strokeWidth="2">
         <path
           id="path37"
@@ -213,7 +213,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   5: (
-    <g id="ZippyZippyMouth" transform="translate(87.58 83.476)">
+    <g id="ZippyMouth" transform="translate(87.58 83.476)">
       <path
         id="path37"
         fill="none"
@@ -248,7 +248,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   6: (
-    <g id="ZippyZippyMouth" transform="translate(87.264 83.903)">
+    <g id="ZippyMouth" transform="translate(87.264 83.903)">
       <path
         id="path37"
         fill="none"
@@ -282,7 +282,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   7: (
-    <g id="ZippyZippyMouth" transform="translate(86.067 90.188)">
+    <g id="ZippyMouth" transform="translate(86.067 90.188)">
       <path
         id="path37"
         fill="none"
@@ -314,7 +314,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   8: (
-    <g id="ZippyZippyMouth" transform="translate(85.893 87.577)">
+    <g id="ZippyMouth" transform="translate(85.893 87.577)">
       <path
         id="path37"
         fill="none"
@@ -344,7 +344,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   9: (
-    <g id="ZippyZippyMouth" transform="translate(86.494 90.655)">
+    <g id="ZippyMouth" transform="translate(86.494 90.655)">
       <path
         id="path37"
         fill="none"
@@ -374,7 +374,7 @@ const Visemes: VisemeMap = {
     </g>
   ),
   10: (
-    <g id="ZippyZippyMouth" transform="translate(85.391 87.185)">
+    <g id="ZippyMouth" transform="translate(85.391 87.185)">
       <path
         id="path37"
         fill="none"
