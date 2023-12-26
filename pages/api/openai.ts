@@ -46,7 +46,7 @@ const model = new ChatOpenAI({
 const retriever = vectorStore.asRetriever(1);
 
 const template = `Act as ${personalityConfig.personality}; respond to {context} with ${personalityConfig.backStory}. 
-  ${personalityConfig.knowledgeBase}" in mind. Keep it concise, within 100 characters.`;
+  ${personalityConfig.knowledgeBase}" in mind. Keep it concise, relevant, and avoid redundancy. Respond with maximum 3 sentences.`
 
 const prompt = ChatPromptTemplate.fromMessages([
   ["ai", template],

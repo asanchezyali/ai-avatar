@@ -1,11 +1,11 @@
 import React from "react";
-import ZippyAvatar from "@/components/zippy/ZippyAvatar";
+import ZippyAvatar from "@/components/avatar/ZippyAvatar";
 import PaperAirplane from "@/components/icons/PaperAirplane";
 import InformationCircle from "@/components/icons/InformationCircle";
 import playAudio from "@/utils/playAudio";
 import useSpeechSynthesis from "@/hooks/useSpeechSynthesis";
 
-export default function AvatarApp() {
+export default function AvatarApp() { 
   const { visemeID, setVisemeID, isDisabled, text, avatarSay, handleTextChange, handleSynthesis } =
     useSpeechSynthesis();
   return (

@@ -78,7 +78,6 @@ export default function useSpeechSynthesis() {
 
     const data = await response.json();
     const messageFromOpenAI = data.response;
-    console.log(messageFromOpenAI);
 
     setAvatarSay(messageFromOpenAI);
 
