@@ -10,6 +10,21 @@ import { BaseOutputParser } from "langchain/schema/output_parser";
 import personalityConfig from "@/constants/personality";
 import { RunnableLambda, RunnableMap, RunnablePassthrough } from "langchain/runnables";
 
+
+const template = `Your task is to acting as a character that has this personality: ${personalityConfig.personality} 
+  and this backstory: ${personalityConfig.backStory}. You should be able to answer questions about this 
+  ${personalityConfig.knowledgeBase}, always responding with a single sentence.`;
+
+const prompt = ChatPromptTemplate.fromMessages([
+  ["ai", template],
+  ["human", "{question}"],
+]);
+
+const model = new ChatOpenAI({
+  openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  temperature: 0.2,
+});
+
 const url = "https://monadical.com/";
 
 const compiledConvert = compile({ wordwrap: 130 });
@@ -28,32 +43,9 @@ const splitter = new RecursiveCharacterTextSplitter({
 
 const splittedDocs = await splitter.splitDocuments(docs);
 
-class OpenAIOutputParser extends BaseOutputParser<string> {
-  async parse(text: string): Promise<string> {
-    return text.replace(/"/g, "");
-  }
-}
-
 const embeddings = new OpenAIEmbeddings({ openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY });
-
 const vectorStore = await HNSWLib.fromDocuments(splittedDocs, embeddings);
-
-const model = new ChatOpenAI({
-  openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-  temperature: 0.2,
-});
-
 const retriever = vectorStore.asRetriever(1);
-
-const template = `Act as ${personalityConfig.personality}; respond to {context} with ${personalityConfig.backStory}. 
-  ${personalityConfig.knowledgeBase}" in mind. Keep it concise, relevant, and avoid redundancy. Respond with maximum 3 sentences.`
-
-const prompt = ChatPromptTemplate.fromMessages([
-  ["ai", template],
-  ["human", "{question}"],
-]);
-
-const outputParser = new OpenAIOutputParser();
 
 const setupAndRetrieval = RunnableMap.from({
   context: new RunnableLambda({
@@ -61,6 +53,14 @@ const setupAndRetrieval = RunnableMap.from({
   }).withConfig({ runName: "contextRetriever" }),
   question: new RunnablePassthrough(),
 });
+
+class OpenAIOutputParser extends BaseOutputParser<string> {
+  async parse(text: string): Promise<string> {
+    return text.replace(/"/g, "");
+  }
+}
+
+const outputParser = new OpenAIOutputParser();
 
 const chain = setupAndRetrieval.pipe(prompt).pipe(model).pipe(outputParser);
 
