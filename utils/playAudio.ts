@@ -10,14 +10,13 @@ async function playAudio(setVisemeID: (id: number) => void) {
   if (ttsAudio) {
     ttsAudio.pause();
   }
-  ttsAudio = new Audio("outputaudio.wav");
-  const response = await fetch(new Request("viseme.json"), {
+  ttsAudio = new Audio("infoAudio.wav");
+  const response = await fetch(new Request("visemes.json"), {
     method: "GET",
     mode: "no-cors",
   });
 
   const visemes = await response.json();
-  console.log(visemes);
 
   ttsAudio.ontimeupdate = () => {
     const currentViseme = visemes.find((frame: VisemeFrame) => {
@@ -26,7 +25,6 @@ async function playAudio(setVisemeID: (id: number) => void) {
     if (!currentViseme) {
       return;
     }
-    console.log(`Viseme received: ${currentViseme.id}`);
     setVisemeID(currentViseme.id ?? 0);
   };
   ttsAudio.play();
