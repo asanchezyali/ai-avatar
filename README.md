@@ -4,7 +4,7 @@
 
 ## Zippy Talking Avatar with Azure Cognitive and Langchain
 
-Zippy Talking Avatar is a talking avatar that uses Azure Cognitive Services and OpenAI GPT-3 to generate text and speech. It is built with Next.js and Tailwind CSS. This  avatar responds to user input by generating both text and speech, offering a dynamic and immersive user experience
+Zippy Talking Avatar uses Azure Cognitive Services and OpenAI GPT-3 to generate text and speech. It is built with Next.js and Tailwind CSS. This  avatar responds to user input by generating both text and speech, offering a dynamic and immersive user experience. 
 
 ## How it works
 Zippy seamlessly blends the power of multiple AI technologies to create a natural and engaging conversational experience:

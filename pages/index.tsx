@@ -17,7 +17,7 @@ export default function AvatarApp() {
             {avatarSay}
           </div>
         ) : null}
-        <h1 className="text-2xl font-bold text-center text-blue-600">Zippy Avatar</h1>
+        <h1 className="text-2xl font-bold text-center text-blue-600">Zippy Talking Avatar</h1>
       </div>
       <div className="h-10 relative my-4">
         <button
