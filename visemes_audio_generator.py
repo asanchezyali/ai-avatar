@@ -1,13 +1,13 @@
 import azure.cognitiveservices.speech as speechsdk
 import json
 
-speech_key = ""
-service_region = ""
+speech_key = "31781f395da74eb081215dc6e623393b"
+service_region = "eastus"
 
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
-speech_config.speech_synthesis_voice_name = "en-US-JaneNeural"
+speech_config.speech_synthesis_voice_name = "en-US-JennyNeural"
 
-input_text = input("Enter text to synthesize: ")
+input_text = """Hello! I'm Zippy, the curious 8-legged octopus with a love for deep sea diving. I explore the depths and coral reefs in search of new discoveries. I'm fascinated by open source underwater projects, as they connect everyone in the vast sea of code. If you have any questions about Monadical or software, feel free to ask. Let's dive into the open source ocean together!"""
 
 ssml = f"""
     <speak version="1.0"
@@ -24,7 +24,7 @@ ssml = f"""
         </voice>
     </speak>"""
 
-file_name = "/public/outputaudio.wav"
+file_name = "public/infoAudio.wav"
 file_config = speechsdk.audio.AudioOutputConfig(filename=file_name)
 
 speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=file_config)
@@ -42,7 +42,7 @@ speech_synthesizer.viseme_received.connect(viseme_callback)
 result = speech_synthesizer.speak_ssml_async(ssml=ssml).get()
 
 if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
-    with open("/public/visemes.json", "w") as f:
+    with open("public/visemes.json", "w") as f:
         json.dump(viseme_data, f, indent=4)
 elif result.reason == speechsdk.ResultReason.Canceled:
     cancellation_details = result.cancellation_details
