@@ -6,14 +6,14 @@ import { ChatPromptTemplate } from "langchain/prompts";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { HNSWLib } from "langchain/vectorstores/hnswlib";
 import { NextApiRequest, NextApiResponse } from "next";
-import { BaseOutputParser } from "langchain/schema/output_parser";
+import { BaseOutputParser, FormatInstructionsOptions } from "langchain/schema/output_parser";
 import personalityConfig from "@/constants/personality";
 import { RunnableLambda, RunnableMap, RunnablePassthrough } from "langchain/runnables";
 
 
 const template = `Your task is to acting as a character that has this personality: ${personalityConfig.personality} 
-  and this backstory: ${personalityConfig.backStory}. You should be able to answer questions about this 
-  ${personalityConfig.knowledgeBase}, always responding with a single sentence.`;
+  and this backstory: ${personalityConfig.backStory} and you always reply with a maximum of 100 words. You should be able to answer questions about this 
+  ${personalityConfig.knowledgeBase}, always responding with a maximum of 100 words.`;
 
 const prompt = ChatPromptTemplate.fromMessages([
   ["ai", template],
@@ -54,7 +54,12 @@ const setupAndRetrieval = RunnableMap.from({
   question: new RunnablePassthrough(),
 });
 
+
 class OpenAIOutputParser extends BaseOutputParser<string> {
+  getFormatInstructions(options?: FormatInstructionsOptions | undefined): string {
+    throw new Error("Method not implemented.");
+  }
+  lc_namespace!: string[];
   async parse(text: string): Promise<string> {
     return text.replace(/"/g, "");
   }
