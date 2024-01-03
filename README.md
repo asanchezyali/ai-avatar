@@ -1,7 +1,4 @@
-<div align="center">
-  <img src="public/images/zippy.png" alt="Logo" width="100%">
-</div>
-
+https://github.com/asanchezyali/zippy-ai-bot/assets/29262782/933ce0c3-434b-45f8-8c27-6a8669da0407
 ## Zippy Talking Avatar with Azure Cognitive and Langchain
 
 Zippy Talking Avatar uses Azure Cognitive Services and OpenAI GPT-3 to generate text and speech. It is built with Next.js and Tailwind CSS. This  avatar responds to user input by generating both text and speech, offering a dynamic and immersive user experience. 
