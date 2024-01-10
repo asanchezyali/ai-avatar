@@ -31,13 +31,13 @@ Zippy seamlessly blends the power of multiple AI technologies to create a natura
 1. Clone this repository
   
 ```bash
-git clone https://github.coma/asanchezyali/zippy-talking-avatar.git
+git clone git@github.com:Monadical-SAS/zippy-avatar-ai.git
 ```
 
 2. Navigate to the project directory
 
 ```bash
-cd zippy-talking-avatar
+cd zippy-avatar-ai
 ```
 
 3. Install dependencies
