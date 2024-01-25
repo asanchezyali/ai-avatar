@@ -3,20 +3,20 @@ interface VisemeFrame {
   id: number;
 }
 
+interface playAudioProps {
+  setVisemeID: (id: number) => void;
+  audioFile: string;
+  visemes: VisemeFrame[];
+}
+
 let TRANSATION_DELAY = 60;
 let ttsAudio: HTMLAudioElement;
 
-async function playAudio(setVisemeID: (id: number) => void) {
+async function playAudio({ setVisemeID, visemes, audioFile }: playAudioProps) {
   if (ttsAudio) {
     ttsAudio.pause();
   }
-  ttsAudio = new Audio("infoAudio.wav");
-  const response = await fetch(new Request("visemes.json"), {
-    method: "GET",
-    mode: "no-cors",
-  });
-
-  const visemes = await response.json();
+  ttsAudio = new Audio(audioFile);
 
   ttsAudio.ontimeupdate = () => {
     const currentViseme = visemes.find((frame: VisemeFrame) => {
