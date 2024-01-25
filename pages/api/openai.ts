@@ -5,7 +5,6 @@ import { ChatOpenAI } from "langchain/chat_models/openai";
 import { ChatPromptTemplate } from "langchain/prompts";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { HNSWLib } from "langchain/vectorstores/hnswlib";
-import { NextApiRequest, NextApiResponse } from "next";
 import { BaseOutputParser, FormatInstructionsOptions } from "langchain/schema/output_parser";
 import personalityConfig from "@/constants/personality";
 import { RunnableLambda, RunnableMap, RunnablePassthrough } from "langchain/runnables";
@@ -67,18 +66,6 @@ class OpenAIOutputParser extends BaseOutputParser<string> {
 
 const outputParser = new OpenAIOutputParser();
 
-const chain = setupAndRetrieval.pipe(prompt).pipe(model).pipe(outputParser);
+const openAIchain = setupAndRetrieval.pipe(prompt).pipe(model).pipe(outputParser);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === "POST") {
-    const message = req.body.message;
-    try {
-      const response = await chain.invoke(message);
-      res.status(200).json({ response });
-    } catch (error) {
-      res.status(500).json({ error: "Error processing request" });
-    }
-  } else {
-    res.status(405).json({ error: "Method not allowed" });
-  }
-}
+export default openAIchain;
