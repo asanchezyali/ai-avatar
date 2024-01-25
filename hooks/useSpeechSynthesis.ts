@@ -9,6 +9,7 @@ export interface VisemeFrame {
 type MessageData = {
   visemes: VisemeFrame[];
   filename: string;
+  audioBuffer: { data: Uint8Array };
 };
 
 export default function useSpeechSynthesis() {
@@ -45,15 +46,13 @@ export default function useSpeechSynthesis() {
     }
 
     const data = await response.json();
-    const messageFromOpenAI = data.response;
-
-    setAvatarSay(messageFromOpenAI);
+    setAvatarSay(data.response);
     setMessageData(data);
   };
 
   React.useEffect(() => {
     if (isPlaying && messageData) {
-      playAudio({ setVisemeID, visemes: messageData.visemes, audioFile: messageData.filename }).then(() => {
+      playAudio({ setVisemeID, visemes: messageData.visemes, audioBuffer: messageData.audioBuffer }).then(() => {
         setIsPlaying(false);
       });
     }
