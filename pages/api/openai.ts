@@ -30,7 +30,7 @@ const compiledConvert = compile({ wordwrap: 130 });
 
 const loader = new RecursiveUrlLoader(url, {
   extractor: compiledConvert,
-  maxDepth: 2,
+  maxDepth: 4,
 });
 
 const docs = await loader.load();
