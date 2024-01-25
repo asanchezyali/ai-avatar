@@ -1,9 +1,11 @@
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
+import { Buffer } from "buffer";
 
 const AZURE_SPEECH_KEY = process.env.NEXT_PUBLIC_AZURE_SPEECH_KEY;
 const AZURE_SPEECH_REGION = process.env.NEXT_PUBLIC_AZURE_SPEECH_REGION;
+const AZURE_VOICE_NAME = process.env.NEXT_PUBLIC_AZURE_VOICE_NAME;
 
-if (!AZURE_SPEECH_KEY || !AZURE_SPEECH_REGION) {
+if (!AZURE_SPEECH_KEY || !AZURE_SPEECH_REGION || !AZURE_VOICE_NAME) {
   throw new Error("Azure API keys are not defined");
 }
 
@@ -26,35 +28,30 @@ function buildSSML(message: string) {
 }
 
 const textToSpeech = async (message: string) => {
-  const ssml = buildSSML(message);
-  const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(AZURE_SPEECH_KEY, AZURE_SPEECH_REGION);
-  speechConfig.speechSynthesisOutputFormat = 5; // mp3
-  speechConfig.speechSynthesisVoiceName = "en-US-JennyNeural";
+  return new Promise((resolve, reject) => {
+    const ssml = buildSSML(message);
+    const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(AZURE_SPEECH_KEY, AZURE_SPEECH_REGION);
+    speechConfig.speechSynthesisOutputFormat = 5; // mp3
+    speechConfig.speechSynthesisVoiceName = AZURE_VOICE_NAME;
 
-  let audioConfig = null;
+    let visemes: { offset: number; id: number }[] = [];
 
-  let randomString = Math.random().toString(36).slice(2, 7);
-  let filename = `./public/speech-${randomString}.mp3`;
+    const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig);
 
-  audioConfig = SpeechSDK.AudioConfig.fromAudioFileOutput(filename);
+    synthesizer.visemeReceived = function (s, e) {
+      visemes.push({
+        offset: e.audioOffset / 10000,
+        id: e.visemeId,
+      });
+    };
 
-  let visemes: { offset: number; id: number }[] = [];
-
-  const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, audioConfig);
-
-  synthesizer.visemeReceived = function (s, e) {
-    visemes.push({
-      offset: e.audioOffset / 10000,
-      id: e.visemeId,
-    });
-  };
-
-  await new Promise((resolve, reject) => {
     synthesizer.speakSsmlAsync(
       ssml,
       (result) => {
-        synthesizer.close();
-        resolve(result);
+        const { audioData } = result;
+        synthesizer.close()
+        const audioBuffer = Buffer.from(audioData);
+        resolve({ audioBuffer, visemes });
       },
       (error) => {
         synthesizer.close();
@@ -62,11 +59,6 @@ const textToSpeech = async (message: string) => {
       }
     );
   });
-
-  return {
-    visemes,
-    filename: `speech-${randomString}.mp3`
-  };
 };
 
 export default textToSpeech;

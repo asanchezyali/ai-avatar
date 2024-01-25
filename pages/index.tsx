@@ -33,7 +33,7 @@ export default function AvatarApp() {
         <button
           className={`
             bg-blue-500 text-white font-bold py-2 px-3 rounded-r-lg absolute bottom-0 right-0 w-[50px] h-10 
-            ${isPlaying ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 text-white"}
+            ${isPlaying ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 text-white"}
           `}
           onClick={() => handleSynthesis()}
           disabled={isPlaying}

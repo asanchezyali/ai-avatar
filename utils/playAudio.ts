@@ -5,18 +5,21 @@ interface VisemeFrame {
 
 interface playAudioProps {
   setVisemeID: (id: number) => void;
-  audioFile: string;
+  audioBuffer: { data: Uint8Array };
   visemes: VisemeFrame[];
 }
 
 let TRANSATION_DELAY = 60;
 let ttsAudio: HTMLAudioElement;
 
-async function playAudio({ setVisemeID, visemes, audioFile }: playAudioProps) {
+async function playAudio({ setVisemeID, visemes, audioBuffer }: playAudioProps) {
   if (ttsAudio) {
     ttsAudio.pause();
   }
-  ttsAudio = new Audio(audioFile);
+  const arrayBuffer = Uint8Array.from(audioBuffer.data).buffer;
+  const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
+  const url = URL.createObjectURL(blob);
+  ttsAudio = new Audio(url);
 
   ttsAudio.ontimeupdate = () => {
     const currentViseme = visemes.find((frame: VisemeFrame) => {
@@ -25,8 +28,13 @@ async function playAudio({ setVisemeID, visemes, audioFile }: playAudioProps) {
     if (!currentViseme) {
       return;
     }
-    setVisemeID(currentViseme.id ?? 0);
+    setVisemeID(currentViseme.id);
   };
+
+  ttsAudio.onended = () => {
+    setVisemeID(0);
+  };
+
   ttsAudio.play();
 }
 
