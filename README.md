@@ -6,6 +6,8 @@ and Tailwind CSS. This  avatar responds to user input by generating both text an
 immersive user experience. You can learn more about Zippy Talking Avatar by visiting the [Kraken the Code: How to Build
 a Talking Avatar](https://monadical.com/posts/how-to-build-a-talking-avatar-with-azure-cognitive-langchain-and-openai.html) website.
 
+I have made this Discord channel available: [Math & Code](https://discord.com/channels/938819411303874631/1268765916179730523) to resolve doubts about the configurations of this project in development.
+
 ## How it works
 Zippy seamlessly blends the power of multiple AI technologies to create a natural and engaging conversational experience:
 
