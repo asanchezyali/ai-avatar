@@ -1,3 +1,5 @@
+
+
 https://github.com/asanchezyali/zippy-ai-bot/assets/29262782/933ce0c3-434b-45f8-8c27-6a8669da0407
 ## Zippy Talking Avatar with Azure Cognitive and Langchain
 
@@ -24,9 +26,9 @@ Zippy seamlessly blends the power of multiple AI technologies to create a natura
 ## Getting Started
 
 ### Prerequisites
-1. Azure subscription - [Create a free account](https://azure.microsoft.com/free/cognitive-services).
-2. [Create a Speech resource](https://portal.azure.com/#create/Microsoft.CognitiveServicesSpeechServices) in the Azure portal.
-3. Your Speech resource key and region. After your Speech resource is deployed, select `Go to resource` to view and manage keys. For more information about Azure AI services resources, see [Get the keys for your resource](https://learn.microsoft.com/en-us/azure/ai-services/multi-service-resource?pivots=azportal#get-the-keys-for-your-resource).
+1. Azure subscription - [Create a free account](https://azure.microsoft.com/free/cognitive-services).
+2. [Create a Speech resource](https://portal.azure.com/#create/Microsoft.CognitiveServicesSpeechServices) in the Azure portal.
+3. Your Speech resource key and region. After your Speech resource is deployed, select `Go to resource` to view and manage keys. For more information about Azure AI services resources, see [Get the keys for your resource](https://learn.microsoft.com/en-us/azure/ai-services/multi-service-resource?pivots=azportal#get-the-keys-for-your-resource).
 4. OpenAI subscription - [Create one](https://openai.com/product).
 5. [Creare a new secret key](https://platform.openai.com/api-keys) in the OpenAI portal.
 6. Node.js and npm (or yarn)
@@ -57,6 +59,7 @@ yarn install
 # AZURE
 NEXT_PUBLIC_SPEECH_KEY=<YOUR_AZURE_SPEECH_KEY>
 NEXT_PUBLIC_SPEECH_REGION=<YOUR_AZURE_SPEECH_REGION>
+NEXT_PUBLIC_AZURE_VOICE_NAME=<YOUR_AZURE_VOICE_NAME>
 
 # OPENAI
 NEXT_PUBLIC_OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
